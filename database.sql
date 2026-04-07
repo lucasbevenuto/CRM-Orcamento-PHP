@@ -1,0 +1,81 @@
+CREATE DATABASE IF NOT EXISTS crm_orcamentos CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE crm_orcamentos;
+
+DROP TABLE IF EXISTS quote_items;
+DROP TABLE IF EXISTS quotes;
+DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS clients;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS settings;
+
+CREATE TABLE users (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    name VARCHAR(150) NOT NULL,
+    created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE clients (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(160) NOT NULL,
+    email VARCHAR(160) DEFAULT NULL,
+    phone VARCHAR(40) NOT NULL,
+    company VARCHAR(160) DEFAULT NULL,
+    notes TEXT DEFAULT NULL,
+    created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE products (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(160) NOT NULL,
+    description TEXT DEFAULT NULL,
+    unit_price DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    cost_price DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE quotes (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    client_id INT UNSIGNED NOT NULL,
+    notes TEXT DEFAULT NULL,
+    total_amount DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    status ENUM('enviado', 'aprovado', 'recusado') NOT NULL DEFAULT 'enviado',
+    pdf_path VARCHAR(255) DEFAULT NULL,
+    created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_quotes_client FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE quote_items (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    quote_id INT UNSIGNED NOT NULL,
+    product_id INT UNSIGNED DEFAULT NULL,
+    item_name VARCHAR(160) NOT NULL,
+    item_description TEXT DEFAULT NULL,
+    unit_price DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    cost_price DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    quantity DECIMAL(10,2) NOT NULL DEFAULT 1.00,
+    total DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    CONSTRAINT fk_quote_items_quote FOREIGN KEY (quote_id) REFERENCES quotes(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_quote_items_product FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE settings (
+    key_name VARCHAR(120) PRIMARY KEY,
+    value_text TEXT DEFAULT NULL,
+    updated_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO users (username, password, name) VALUES
+('admin', 'admin123', 'Administrador');
+
+INSERT INTO settings (key_name, value_text) VALUES
+('company_name', 'Sua Empresa'),
+('company_document', '00.000.000/0001-00'),
+('company_email', 'contato@suaempresa.com'),
+('company_phone', '(11) 99999-9999'),
+('company_address', 'Rua Exemplo, 123 - Centro - Sao Paulo/SP'),
+('company_logo', 'assets/img/logo.svg');

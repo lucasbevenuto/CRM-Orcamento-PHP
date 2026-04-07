@@ -1,0 +1,206 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+.panel-card {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(15, 23, 42, 0.72);
+    border-radius: 2rem;
+    padding: 1.5rem;
+    box-shadow: 0 25px 60px rgba(2, 6, 23, 0.36);
+    backdrop-filter: blur(18px);
+}
+
+.stat-card {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.88), rgba(15, 23, 42, 0.64));
+    border-radius: 2rem;
+    padding: 1.5rem;
+    box-shadow: 0 25px 60px rgba(8, 47, 73, 0.24);
+}
+
+.stat-label,
+.eyebrow {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.28em;
+    color: rgb(148 163 184);
+}
+
+.stat-value {
+    margin-top: 1rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 2.2rem;
+    line-height: 1;
+    font-weight: 700;
+    color: #fff;
+}
+
+.stat-copy {
+    margin-top: 0.85rem;
+    color: rgb(148 163 184);
+    font-size: 0.92rem;
+    line-height: 1.7;
+}
+
+.panel-title {
+    margin-top: 0.45rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-danger,
+.menu-link,
+.menu-link-active {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem;
+    padding: 0.85rem 1.1rem;
+    font-size: 0.92rem;
+    font-weight: 700;
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #0891b2, #2563eb);
+    color: #fff;
+    border: 1px solid rgba(125, 211, 252, 0.24);
+    box-shadow: 0 18px 40px rgba(14, 116, 144, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.06);
+    color: #e2e8f0;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-secondary:hover,
+.menu-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.btn-danger {
+    background: rgba(244, 63, 94, 0.12);
+    color: #fecdd3;
+    border: 1px solid rgba(244, 63, 94, 0.18);
+}
+
+.btn-danger:hover {
+    background: rgba(244, 63, 94, 0.18);
+}
+
+.menu-link {
+    justify-content: flex-start;
+    color: #cbd5e1;
+    border: 1px solid transparent;
+}
+
+.menu-link-active {
+    justify-content: flex-start;
+    color: #fff;
+    background: linear-gradient(135deg, rgba(34, 211, 238, 0.18), rgba(59, 130, 246, 0.2));
+    border: 1px solid rgba(125, 211, 252, 0.16);
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.7rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #e2e8f0;
+}
+
+.form-input {
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(15, 23, 42, 0.82);
+    color: #fff;
+    border-radius: 1rem;
+    padding: 0.9rem 1rem;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.form-input::placeholder {
+    color: rgb(100 116 139);
+}
+
+.form-input:focus {
+    border-color: rgba(34, 211, 238, 0.7);
+    box-shadow: 0 0 0 4px rgba(34, 211, 238, 0.12);
+}
+
+.quick-card {
+    display: block;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 1.5rem;
+    padding: 1.15rem 1.25rem;
+    color: #e2e8f0;
+    transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.quick-card strong {
+    display: block;
+    color: #fff;
+    margin-bottom: 0.3rem;
+}
+
+.quick-card span {
+    display: block;
+    color: rgb(148 163 184);
+    line-height: 1.7;
+}
+
+.quick-card:hover {
+    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(34, 211, 238, 0.16);
+}
+
+[data-chart] {
+    width: 100%;
+}
+
+[data-chart] svg text {
+    font-family: 'Manrope', sans-serif;
+}
+
+input[type="file"].form-input {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+
+.sidebar-shell {
+    max-width: 100%;
+}
+
+@media (max-width: 1023px) {
+    .panel-card,
+    .stat-card {
+        border-radius: 1.5rem;
+        padding: 1.2rem;
+    }
+}

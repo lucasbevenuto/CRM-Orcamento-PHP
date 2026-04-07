@@ -1,0 +1,6 @@
+local_mysql/
+*.log
+*.pid
+pdf-test.pdf
+.php-server.pid
+.mysqld-local.pid
