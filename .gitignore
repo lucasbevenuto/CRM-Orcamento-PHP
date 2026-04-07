@@ -4,3 +4,5 @@ local_mysql/
 pdf-test.pdf
 .php-server.pid
 .mysqld-local.pid
+public_html/pdf/*.pdf
+!public_html/pdf/.gitignore
