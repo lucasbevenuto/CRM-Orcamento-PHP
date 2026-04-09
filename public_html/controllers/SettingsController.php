@@ -62,6 +62,25 @@ class SettingsController extends Controller
         redirect(route_url(['page' => 'settings']));
     }
 
+    public function resetData(): void
+    {
+        if (!is_post()) {
+            redirect(route_url(['page' => 'settings']));
+        }
+
+        $confirmation = strtoupper(trim($_POST['confirmation_text'] ?? ''));
+
+        if ($confirmation !== 'APAGAR TUDO') {
+            flash('error', 'Digite APAGAR TUDO para confirmar a limpeza completa do sistema.');
+            redirect(route_url(['page' => 'settings']));
+        }
+
+        $this->settings->resetApplicationData();
+
+        flash('success', 'Todos os dados cadastrados foram removidos. O acesso ao sistema foi preservado.');
+        redirect(route_url(['page' => 'settings']));
+    }
+
     private function handleLogoUpload(array $file): array
     {
         if (($file['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) {

@@ -78,6 +78,7 @@ try {
             $map = [
                 'index' => 'index',
                 'update' => 'update',
+                'reset_data' => 'resetData',
             ];
             $method = $map[$action] ?? null;
             break;

@@ -84,5 +84,35 @@ $settingsData = [
                 <p>A imagem enviada passa a ser usada como foto da empresa no painel e no PDF.</p>
             </div>
         </article>
+
+        <article class="panel-card border border-rose-400/20 bg-rose-500/10">
+            <p class="eyebrow text-rose-200">Zona de perigo</p>
+            <h2 class="panel-title">Apagar todas as informacoes</h2>
+            <div class="mt-5 space-y-3 text-sm leading-7 text-rose-100/90">
+                <p>Essa acao remove todos os clientes, produtos, orcamentos, PDFs gerados e redefine os dados da empresa para o padrao.</p>
+                <p>O usuario de login continua ativo para que voce possa entrar novamente no sistema depois da limpeza.</p>
+            </div>
+
+            <form action="<?= route_url(['page' => 'settings', 'action' => 'reset_data']) ?>" method="post" class="mt-6 space-y-4">
+                <div>
+                    <label for="confirmation_text" class="form-label text-rose-100">Digite APAGAR TUDO para confirmar</label>
+                    <input
+                        id="confirmation_text"
+                        name="confirmation_text"
+                        type="text"
+                        class="form-input border-rose-400/30 bg-slate-950/70"
+                        placeholder="APAGAR TUDO"
+                        required
+                    >
+                </div>
+                <button
+                    type="submit"
+                    class="inline-flex items-center justify-center rounded-2xl border border-rose-300/30 bg-rose-500/20 px-5 py-3 text-sm font-semibold text-rose-50 transition hover:bg-rose-500/30"
+                    onclick="return confirm('Tem certeza que deseja apagar todas as informacoes cadastradas? Essa acao nao pode ser desfeita.');"
+                >
+                    Apagar tudo
+                </button>
+            </form>
+        </article>
     </aside>
 </section>

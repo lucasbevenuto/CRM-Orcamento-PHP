@@ -69,4 +69,60 @@ class Setting extends BaseModel
             ]);
         }
     }
+
+    public function resetApplicationData(): void
+    {
+        $currentCompany = $this->company();
+
+        $this->db->beginTransaction();
+
+        try {
+            $this->db->exec('DELETE FROM quote_items');
+            $this->db->exec('DELETE FROM quotes');
+            $this->db->exec('DELETE FROM clients');
+            $this->db->exec('DELETE FROM products');
+            $this->db->exec('DELETE FROM settings');
+
+            $this->db->commit();
+        } catch (Throwable $exception) {
+            if ($this->db->inTransaction()) {
+                $this->db->rollBack();
+            }
+
+            throw $exception;
+        }
+
+        $this->removeGeneratedPdfs();
+        $this->removeUploadedCompanyLogo($currentCompany['logo'] ?? '');
+    }
+
+    private function removeGeneratedPdfs(): void
+    {
+        $pdfDirectory = public_path(app_config('app.public_pdf_path', 'pdf'));
+
+        if (!is_dir($pdfDirectory)) {
+            return;
+        }
+
+        foreach (glob($pdfDirectory . '/*.pdf') ?: [] as $file) {
+            if (is_file($file)) {
+                @unlink($file);
+            }
+        }
+    }
+
+    private function removeUploadedCompanyLogo(string $logoPath): void
+    {
+        $normalizedPath = ltrim(str_replace('\\', '/', $logoPath), '/');
+
+        if ($normalizedPath === '' || strpos($normalizedPath, 'uploads/company/') !== 0) {
+            return;
+        }
+
+        $fullPath = public_path($normalizedPath);
+
+        if (is_file($fullPath)) {
+            @unlink($fullPath);
+        }
+    }
 }
